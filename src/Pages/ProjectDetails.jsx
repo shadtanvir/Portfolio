@@ -120,7 +120,7 @@ const ProjectDetails = () => {
         <img
           src={project.image}
           alt={project.name}
-          className="w-full object-cover h-[400px]"
+          className="w-full object-fill h-[400px]"
         />
       </motion.div>
 

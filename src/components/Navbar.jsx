@@ -13,7 +13,7 @@ const Navbar = () => {
     localStorage.getItem("theme") === "dark" ? "dark" : "light"
   );
   const [menuOpen, setMenuOpen] = useState(false);
-  const menuRef = useRef(null);
+  const menuRef = useRef();
 
   useEffect(() => {
     document.documentElement.setAttribute("data-theme", theme);
@@ -28,7 +28,7 @@ const Navbar = () => {
     };
     document.addEventListener("mousedown", handleClickOutside);
     return () => document.removeEventListener("mousedown", handleClickOutside);
-  }, []);
+  }, [menuOpen]);
 
   const navLinks = [
     { path: "about", label: "About" },
@@ -39,81 +39,77 @@ const Navbar = () => {
   ];
 
   return (
-    <nav className="sticky top-0 z-50 bg-base-200 border-b border-base-200 ">
-      <div className="max-w-5xl mx-auto flex   md:flex-row  items-center md:justify-between px-6 py-4">
-        {" "}
-        {/* Mobile Menu Button */}
-        <button
-          onClick={() => setMenuOpen(!menuOpen)}
-          className="md:hidden text-2xl text-[var(--color-accent)] focus:outline-none"
-        >
-          <AiOutlineMenu />
-        </button>
-        {/* Logo */}
-        <NavLink
-          to="/"
-          className="flex items-center"
-          onClick={() => setMenuOpen(false)}
-        >
-          <motion.img
-            src={logo}
-            alt="Logo"
-            className="w-18 h-10 rounded-full"
-          />
-          <span className="text-2xl font-bold text-[var(--color-accent)] group-hover:text-[var(--color-success)] transition-all">
-            Tanvir
-          </span>
-        </NavLink>
-        {/* Desktop Nav */}
-        <ul className="hidden md:flex items-center gap-8 font-medium">
-          {navLinks.map((link) => (
-            <li key={link.path}>
-              <Link
-                to={link.path}
-                smooth={true}
-                duration={500}
-                spy={true}
-                offset={-110}
-                className="cursor-pointer relative py-1 transition-all duration-300 text-[var(--color-primary)] hover:text-[var(--color-accent)] text-lg"
-                activeClass="active"
-              >
-                {link.label}
-                <motion.span
-                  className="absolute left-0 bottom-0 w-0 h-[2px] bg-[var(--color-accent)]"
-                  whileHover={{ width: "100%" }}
-                  transition={{ duration: 0.3 }}
-                />
-              </Link>
-            </li>
-          ))}
-          {/* Theme toggle */}
-          <li className="text-center">
-            <button
-              onClick={() =>
-                setTheme((prev) => (prev === "light" ? "dark" : "light"))
-              }
-              className=" rounded-full "
+    <div className="navbar sticky z-50 top-0 shadow-md px-6 py-4 bg-base-200 text-primary-content font-poppins h-20">
+      <div className="navbar max-w-5xl mx-auto">
+        {/* Mobile dropdown */}
+        <div className="navbar-start">
+          <div className="dropdown lg:hidden">
+            <div
+              tabIndex={0}
+              role="button"
+              className="p-2 hover:font-semibold hover:bg-base-300 lg:hidden text-primary"
             >
-              {theme === "dark" ? (
-                <IoSunny className="text-yellow-400 text-xl" />
-              ) : (
-                <FaMoon className="text-indigo-500 text-lg" />
-              )}
-            </button>
-          </li>
-        </ul>
-      </div>
+              <button className=" text-2xl text-[var(--color-accent)] focus:outline-none">
+                <AiOutlineMenu />
+              </button>
+            </div>
+            <ul
+              tabIndex={0}
+              className="menu dropdown-content z-[1] p-2 shadow bg-base-200 items-center rounded-box text-lg w-52"
+            >
+              {navLinks.map((link) => (
+                <li key={link.path}>
+                  <Link
+                    to={link.path}
+                    smooth={true}
+                    duration={500}
+                    spy={true}
+                    offset={-110}
+                    className="cursor-pointer relative py-1 transition-all duration-300 text-[var(--color-primary)] hover:text-[var(--color-accent)]"
+                    activeClass="active"
+                  >
+                    {link.label}
+                    <motion.span
+                      className="absolute left-0 bottom-0 w-0 h-[2px] bg-[var(--color-accent)]"
+                      whileHover={{ width: "100%" }}
+                      transition={{ duration: 0.3 }}
+                    />
+                  </Link>
+                </li>
+              ))}
+              {/* Theme toggle */}
+              <li>
+                <button
+                  onClick={() =>
+                    setTheme((prev) => (prev === "light" ? "dark" : "light"))
+                  }
+                >
+                  {theme === "dark" ? (
+                    <IoSunny className="text-yellow-400 text-xl" />
+                  ) : (
+                    <FaMoon className="text-indigo-500 text-lg" />
+                  )}
+                </button>
+              </li>
+            </ul>
+          </div>
 
-      {/* Mobile Menu */}
-      {menuOpen && (
-        <motion.div
-          ref={menuRef}
-          initial={{ opacity: 0, y: -20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.3 }}
-          className="md:hidden bg-[var(--color-base-100)] border-t border-[var(--color-base-200)] shadow-md w-35 "
-        >
-          <ul className="flex flex-col text-center py-4 space-y-3 font-medium">
+          <div className="flex-1 ">
+            <div className="flex items-center">
+              <NavLink to="/" className="flex items-center">
+                <img
+                  src={logo}
+                  alt="Logo"
+                  className="w-20 h-20 object-contain"
+                />
+                <span className="text-accent text-3xl  font-bold ">Tanvir</span>
+              </NavLink>
+            </div>
+          </div>
+        </div>
+
+        <div className="flex-none navbar-end">
+          <ul className="menu menu-horizontal md:items-center px-1 font-poppins text-lg hidden lg:flex flex-nowrap">
             {navLinks.map((link) => (
               <li key={link.path}>
                 <Link
@@ -121,7 +117,7 @@ const Navbar = () => {
                   smooth={true}
                   duration={500}
                   spy={true}
-                  offset={-100}
+                  offset={-110}
                   className="cursor-pointer relative py-1 transition-all duration-300 text-[var(--color-primary)] hover:text-[var(--color-accent)]"
                   activeClass="active"
                 >
@@ -140,7 +136,6 @@ const Navbar = () => {
                 onClick={() =>
                   setTheme((prev) => (prev === "light" ? "dark" : "light"))
                 }
-                className=" rounded-full "
               >
                 {theme === "dark" ? (
                   <IoSunny className="text-yellow-400 text-xl" />
@@ -150,9 +145,9 @@ const Navbar = () => {
               </button>
             </li>
           </ul>
-        </motion.div>
-      )}
-    </nav>
+        </div>
+      </div>
+    </div>
   );
 };
 

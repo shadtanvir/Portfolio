@@ -22,8 +22,8 @@ const Hero = () => {
   };
 
   return (
-    <section className="hero max-h-2/3 bg-base-100 relative overflow-x-hidden overflow-y-hidden">
-      <div className="max-w-5xl mx-auto flex flex-col-reverse lg:flex-row items-center justify-between px-6 py-20">
+    <section className="hero max-h-2/3 bg-base-100  relative overflow-x-hidden overflow-y-hidden">
+      <div className="max-w-5xl mx-auto flex flex-col-reverse lg:flex-row items-center justify-between px-6 py-15 md:py-20 gap-10 md:gap-0">
         {/* Particle Background */}
         <Particles
           id="tsparticles"
@@ -166,7 +166,7 @@ const Hero = () => {
           initial={{ opacity: 0, scale: 0.8 }}
           animate={{ opacity: 1, scale: 1 }}
           transition={{ duration: 1 }}
-          className="flex-1 flex justify-center md:justify-end mt-10 md:mt-0 z-10"
+          className="flex-1 flex justify-center md:justify-end  md:mt-0 z-10"
         >
           <div className="relative w-64 h-64 md:w-80 md:h-80 rounded-full overflow-hidden shadow-2xl border-4 border-[var(--color-accent)] hover:scale-105 transition-transform bg-[rgba(255,255,255,0.1)] backdrop-blur-xl">
             <img

@@ -11,7 +11,7 @@ const AboutMe = () => {
   return (
     <section
       id="about"
-      className="pb-20 bg-base-100 text-base-content transition-colors duration-300"
+      className="pb-20 mt-20 bg-base-100 text-base-content transition-colors duration-300"
     >
       <div className="max-w-5xl mx-auto px-6">
         {/* Section Title */}
